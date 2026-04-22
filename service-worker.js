@@ -1,10 +1,4 @@
-// ═══════════════════════════════════════════════════════
-// RECEITAS DO BRUNO — service-worker.js
-// Cache-First — funciona 100% offline após primeiro acesso
-// Versão: v2 — ícones PNG e screenshots incluídos
-// ═══════════════════════════════════════════════════════
-
-const CACHE = 'receitas-bruno-v2';
+const CACHE = 'receitas-bruno-v3';
 const FILES = [
   './index.html',
   './styles.css',
@@ -17,11 +11,13 @@ const FILES = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './icon-512-maskable.png',
   './apple-touch-icon.png',
+  './icon-shortcut-rapidas.png',
+  './icon-shortcut-lista.png',
   './screenshot-inicio.png',
   './screenshot-receita.png',
-  './screenshot-wide.png',
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&family=Lora:ital@0;1&display=swap'
+  './screenshot-wide.png'
 ];
 
 self.addEventListener('install', e => {
@@ -44,19 +40,18 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  if (!e.request.url.startsWith(self.location.origin)) return;
   e.respondWith(
-    caches.match(e.request)
-      .then(cached => {
-        if (cached) return cached;
-        return fetch(e.request)
-          .then(res => {
-            if (res && res.status === 200 && res.type === 'basic') {
-              const clone = res.clone();
-              caches.open(CACHE).then(c => c.put(e.request, clone));
-            }
-            return res;
-          })
-          .catch(() => caches.match('./index.html'));
-      })
+    caches.match(e.request).then(cached => {
+      if (cached) return cached;
+      return fetch(e.request)
+        .then(res => {
+          if (res && res.status === 200 && res.type === 'basic') {
+            caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+          }
+          return res;
+        })
+        .catch(() => caches.match('./index.html'));
+    })
   );
 });
