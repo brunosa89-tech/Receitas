@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#c8440a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Receitas do Bruno">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+  <title>Receitas do Bruno</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="app-header">
+  <div class="hdr-brand">
+    <div class="hdr-logo">🍳</div>
+    <div class="hdr-title">Receitas<span class="hdr-sub">do Bruno</span></div>
+  </div>
+  <div class="hdr-actions">
+    <button id="btn-search" class="hdr-btn" title="Buscar receita" aria-label="Buscar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <button id="btn-favs-header" class="hdr-btn" title="Favoritos" aria-label="Favoritos">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div id="search-overlay" class="search-overlay" role="search">
+  <div class="search-box">
+    <button id="search-back" class="search-back" aria-label="Voltar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <input type="text" id="search-input" placeholder="Buscar receita ou ingrediente..." autocomplete="off" aria-label="Buscar receita">
+  </div>
+  <div id="search-filters" class="search-filters">
+    <button class="sf-chip active" data-filter="todos">Todos</button>
+    <button class="sf-chip" data-filter="frango">🍗 Frango</button>
+    <button class="sf-chip" data-filter="carne">🥩 Carne</button>
+    <button class="sf-chip" data-filter="peixe">🐟 Peixe</button>
+    <button class="sf-chip" data-filter="massa">🍝 Massas</button>
+    <button class="sf-chip" data-filter="doce">🍮 Doces</button>
+    <button class="sf-chip" data-filter="crianca">👶 Criança</button>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav" role="navigation" aria-label="Navegação principal">
+  <button class="nav-btn active" data-tab="inicio" aria-label="Início">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Início</span>
+  </button>
+  <button class="nav-btn" data-tab="receitas" aria-label="Receitas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <span>Receitas</span>
+  </button>
+  <button class="nav-btn" data-tab="lista" aria-label="Lista de Compras">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    <span>Lista</span>
+  </button>
+  <button class="nav-btn" data-tab="conservacao" aria-label="Conservação">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+    <span>Conservar</span>
+  </button>
+  <button class="nav-btn" data-tab="favoritos" aria-label="Favoritos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <span>Favoritos</span>
+  </button>
+</nav>
+
+<!-- MAIN -->
+<main id="app-main">
+
+  <!-- INÍCIO -->
+  <div id="tab-inicio" class="tab-pane active">
+    <div class="hero-banner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Bem-vinda à cozinha 👋</div>
+        <div class="hero-title">O que vamos<br>cozinhar hoje?</div>
+      </div>
+      <div class="hero-art">🍲</div>
+    </div>
+    <div class="quick-filters">
+      <button class="qf-btn" data-tipo="frango">🍗<span>Frango</span></button>
+      <button class="qf-btn" data-tipo="carne">🥩<span>Carne</span></button>
+      <button class="qf-btn" data-tipo="peixe">🐟<span>Peixe</span></button>
+      <button class="qf-btn" data-tipo="massa">🍝<span>Massas</span></button>
+      <button class="qf-btn" data-tipo="arroz">🍚<span>Arroz</span></button>
+      <button class="qf-btn" data-tipo="feijao">🫘<span>Feijão</span></button>
+      <button class="qf-btn" data-tipo="sopa">🍜<span>Sopas</span></button>
+      <button class="qf-btn" data-tipo="doce">🍮<span>Doces</span></button>
+    </div>
+    <div class="section-title">Receitas em destaque</div>
+    <div id="inicio-destaques" class="cards-row"></div>
+    <div class="section-title">Rápidas — até 30 minutos</div>
+    <div id="inicio-rapidas" class="cards-row"></div>
+    <div class="section-title">Para as crianças 👶</div>
+    <div id="inicio-criancas" class="cards-row"></div>
+  </div>
+
+  <!-- RECEITAS -->
+  <div id="tab-receitas" class="tab-pane">
+    <div class="receitas-header">
+      <div class="tab-title">Todas as Receitas</div>
+      <div class="receitas-filtros">
+        <select id="filtro-tipo" aria-label="Filtrar por tipo">
+          <option value="">Tipo de prato</option>
+          <option value="prato-principal">Prato Principal</option>
+          <option value="massa">Massas</option>
+          <option value="arroz">Arroz</option>
+          <option value="feijao">Feijão</option>
+          <option value="sopa">Sopas e Caldos</option>
+          <option value="acompanhamento">Acompanhamentos</option>
+          <option value="lanche">Lanches</option>
+          <option value="doce">Doces</option>
+          <option value="cafe">Café da Manhã</option>
+        </select>
+        <select id="filtro-proteina" aria-label="Filtrar por proteína">
+          <option value="">Proteína</option>
+          <option value="frango">Frango</option>
+          <option value="carne">Carne Bovina</option>
+          <option value="peixe">Peixe</option>
+          <option value="ovo">Ovos</option>
+          <option value="veggie">Sem carne</option>
+        </select>
+        <select id="filtro-tempo" aria-label="Filtrar por tempo">
+          <option value="">Tempo</option>
+          <option value="30">Até 30 min</option>
+          <option value="60">Até 1 hora</option>
+          <option value="120">Até 2 horas</option>
+        </select>
+        <select id="filtro-dific" aria-label="Filtrar por dificuldade">
+          <option value="">Dificuldade</option>
+          <option value="fácil">Fácil</option>
+          <option value="médio">Médio</option>
+          <option value="difícil">Difícil</option>
+        </select>
+        <label class="filtro-check">
+          <input type="checkbox" id="filtro-crianca"> 👶 Criança
+        </label>
+      </div>
+      <div id="receitas-count" class="receitas-count"></div>
+    </div>
+    <div id="receitas-grid" class="receitas-grid"></div>
+  </div>
+
+  <!-- LISTA DE COMPRAS -->
+  <div id="tab-lista" class="tab-pane">
+    <div class="lista-header">
+      <div class="tab-title">Lista de Compras</div>
+      <div class="lista-sub">Selecione receitas para gerar sua lista</div>
+    </div>
+    <div id="lista-receitas-sel" class="lista-receitas-sel"></div>
+    <button id="btn-add-receita-lista" class="btn-add-lista">+ Adicionar receita</button>
+    <div id="lista-resultado" class="lista-resultado" style="display:none">
+      <div class="lista-resultado-header">
+        <div class="lista-resultado-title">Ingredientes necessários</div>
+        <button id="btn-limpar-lista" class="btn-ghost-sm">Limpar tudo</button>
+      </div>
+      <div id="lista-itens"></div>
+    </div>
+  </div>
+
+  <!-- CONSERVAÇÃO -->
+  <div id="tab-conservacao" class="tab-pane">
+    <div class="cons-header">
+      <div class="tab-title">Como Conservar</div>
+      <div class="cons-sub">Geladeira e freezer — tudo no ponto certo</div>
+      <input type="text" id="cons-search" placeholder="Buscar alimento..." class="cons-search-input" aria-label="Buscar alimento">
+    </div>
+    <div id="cons-lista"></div>
+  </div>
+
+  <!-- FAVORITOS -->
+  <div id="tab-favoritos" class="tab-pane">
+    <div class="favs-header">
+      <div class="tab-title">Meus Favoritos ❤️</div>
+    </div>
+    <div id="favs-grid" class="receitas-grid"></div>
+    <div id="favs-vazio" class="favs-vazio" style="display:none">
+      <div class="favs-vazio-icon">🤍</div>
+      <div class="favs-vazio-text">Nenhuma receita favorita ainda.<br>Toque no ❤️ em qualquer receita para salvar.</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL RECEITA -->
+<div id="modal-receita" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Receita">
+  <div class="modal-receita">
+    <div class="modal-receita-hdr" id="modal-hdr">
+      <button class="modal-back" id="btn-modal-back" aria-label="Voltar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="modal-fav-btn" id="btn-modal-fav" aria-label="Favoritar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    </div>
+    <div id="modal-body" class="modal-body-scroll"></div>
+  </div>
+</div>
+
+<!-- MODAL PASSO A PASSO -->
+<div id="modal-passos" class="modal-overlay modal-passos-overlay" role="dialog" aria-modal="true">
+  <div class="modal-passos">
+    <div class="passos-hdr">
+      <button id="btn-passos-fechar" class="passos-fechar" aria-label="Fechar modo passo a passo">✕</button>
+      <div class="passos-titulo" id="passos-titulo"></div>
+      <div class="passos-progresso" id="passos-progresso"></div>
+    </div>
+    <div class="passos-content" id="passos-content"></div>
+    <div class="passos-timer" id="passos-timer" style="display:none">
+      <div class="timer-display" id="timer-display"></div>
+      <div class="timer-btns">
+        <button id="btn-timer-toggle" class="timer-btn-main">▶ Iniciar</button>
+        <button id="btn-timer-reset" class="timer-btn-sec">↺ Reiniciar</button>
+      </div>
+    </div>
+    <div class="passos-nav">
+      <button id="btn-passo-ant" class="passo-nav-btn" aria-label="Passo anterior">← Anterior</button>
+      <div class="passo-dots" id="passo-dots"></div>
+      <button id="btn-passo-prox" class="passo-nav-btn passo-nav-prox" aria-label="Próximo passo">Próximo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADICIONAR À LISTA -->
+<div id="modal-add-lista" class="modal-overlay modal-center" role="dialog" aria-modal="true">
+  <div class="modal-sm">
+    <div class="modal-sm-hdr">
+      <div class="modal-sm-title">Adicionar à lista</div>
+      <button data-close="modal-add-lista" class="modal-sm-close" aria-label="Fechar">✕</button>
+    </div>
+    <input type="text" id="add-lista-search" placeholder="Buscar receita..." class="add-lista-search-input" aria-label="Buscar receita para lista">
+    <div id="add-lista-resultados" class="add-lista-resultados"></div>
+  </div>
+</div>
+
+<script src="data-receitas-1.js"></script>
+<script src="data-receitas-2.js"></script>
+<script src="data-receitas-3.js"></script>
+<script src="data-conservacao.js"></script>
+<script src="rules.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

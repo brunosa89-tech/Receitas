@@ -1,0 +1,72 @@
+{
+  "id": "/receitas-bruno/",
+  "name": "Receitas do Bruno",
+  "short_name": "Receitas",
+  "description": "O caderno de receitas digitalizado — 110 receitas do dia a dia brasileiro",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdf8f2",
+  "theme_color": "#c8440a",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["food", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-inicio.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tela inicial — receitas em destaque e filtros rápidos"
+    },
+    {
+      "src": "screenshot-receita.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Receita completa com ingredientes e modo de preparo"
+    },
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Receitas do Bruno no desktop — grid completo de receitas"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Receitas Rápidas",
+      "short_name": "Rápidas",
+      "description": "Receitas em até 30 minutos",
+      "url": "./index.html#rapidas"
+    },
+    {
+      "name": "Lista de Compras",
+      "short_name": "Lista",
+      "description": "Minha lista de compras",
+      "url": "./index.html#lista"
+    }
+  ]
+}
